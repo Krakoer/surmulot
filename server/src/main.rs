@@ -1,3 +1,4 @@
+use api::routes;
 use tokio;
 use anyhow;
 
@@ -7,10 +8,12 @@ pub mod entities;
 mod error;
 mod repository;
 mod service;
+mod api;
 
 pub use error::Error;
 pub use repository::Repository;
 pub use service::Service;
+
 
 #[tokio::main(flavor = "multi_thread")]
 async fn main() -> Result<(), anyhow::Error> {
@@ -22,16 +25,12 @@ async fn main() -> Result<(), anyhow::Error> {
     db::migrate(&pool).await?;
 
     let s = Service::new(pool);
-    let agent_id = s.register_agent().await?;
-
-    let agents = s.get_agents().await?;
-    println!("Agents: {:#?}", agents);
-
-    s.create_job(&agent_id, String::from("Coucouc je sus un poisson")).await?;
-
-    let jobs = s.list_jobs().await?;
-    println!("Jobs: {:#?}", jobs);
+    
+    let app = routes(s);
+    axum::Server::bind(&"127.0.0.1:3000".parse().unwrap())
+        .serve(app.into_make_service())
+        .await
+        .unwrap();
 
     Ok(())
-
 }

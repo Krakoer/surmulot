@@ -1,5 +1,5 @@
 mod agents;
 mod jobs;
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct Repository {}

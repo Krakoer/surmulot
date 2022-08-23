@@ -5,7 +5,7 @@ use crate::{Repository};
 mod agents;
 mod jobs;
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct Service{
     repo: Repository,
     db: Pool<Postgres>
