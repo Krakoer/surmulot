@@ -23,7 +23,11 @@ impl Service{
         Ok(new_job)
     }
 
-    pub async fn list_jobs(&self) -> Result<Vec<Job>, Error>{
+    pub async fn list_all_jobs(&self) -> Result<Vec<Job>, Error>{
         self.repo.get_all_jobs(&self.db).await
+    }
+
+    pub async fn list_jobs(&self, agent_id: Uuid) -> Result<Vec<Job>, Error>{
+        self.repo.get_jobs(&self.db, agent_id).await
     }
 }

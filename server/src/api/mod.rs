@@ -15,6 +15,11 @@ pub fn routes(s: Service) -> Router{
         .route(
             "/jobs",
             post(jobs::post_jobs)
+            .get(jobs::get_all_jobs)
+        )
+        .route(
+            "/jobs/:agent_id",
+            get(jobs::get_jobs)
         )
         .layer(Extension(s));
 

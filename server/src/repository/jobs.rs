@@ -1,5 +1,6 @@
 use sqlx::{Pool, Postgres};
 use log::error;
+use uuid::Uuid;
 
 use crate::{Repository, entities::Job, Error};
 
@@ -30,6 +31,20 @@ impl Repository{
     pub async fn get_all_jobs(&self, db: &Pool<Postgres>) -> Result<Vec<Job>, Error>{
         const QUERY: &str = "SELECT * FROM jobs ORDER BY created_at";
         match sqlx::query_as::<_, Job>(QUERY)
+            .fetch_all(db)
+            .await{
+                Ok(res) => Ok(res),
+                Err(err) => {
+                    error!("find all_agents: {}", err);
+                    Err(err.into())
+                }
+            }
+    }
+
+    pub async fn get_jobs(&self, db: &Pool<Postgres>, agent_id: Uuid) -> Result<Vec<Job>, Error>{
+        const QUERY: &str = "SELECT * FROM jobs WHERE agent_id = $1 ORDER BY created_at";
+        match sqlx::query_as::<_, Job>(QUERY)
+            .bind(agent_id)
             .fetch_all(db)
             .await{
                 Ok(res) => Ok(res),
