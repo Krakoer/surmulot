@@ -22,7 +22,7 @@ impl Repository{
             .await{
                 Ok(_) => Ok(()),
                 Err(err) => {
-                    error!("create_jobs: Inserting job: {}", &err);
+                    error!("add_jobs: Inserting job: {}", &err);
                     Err(err.into())
                 }
             }
@@ -35,7 +35,7 @@ impl Repository{
             .await{
                 Ok(res) => Ok(res),
                 Err(err) => {
-                    error!("find all_agents: {}", err);
+                    error!("get_all_jobs: {}", err);
                     Err(err.into())
                 }
             }
@@ -49,7 +49,7 @@ impl Repository{
             .await{
                 Ok(res) => Ok(res),
                 Err(err) => {
-                    error!("find all_agents: {}", err);
+                    error!("get_jobs: {}", err);
                     Err(err.into())
                 }
             }
