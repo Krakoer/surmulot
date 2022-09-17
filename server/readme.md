@@ -1,5 +1,7 @@
 # Server
 
+Needs postgres server (use docker ;))
+
 ## Endpoints
 
 - [x] /agents       GET     --> Vec<Agent>

@@ -44,7 +44,7 @@ pub async fn get_jobs(service: Extension<Service>, Path(agent_id): Path<String>)
     };
     
     match service.list_jobs(agent_id).await{
-        Ok(jobs) => format!("{:#?}", jobs),
+        Ok(job) => format!("{:#?}", job),
         Err(e) => format!("Error getting jobs: {}", e)
     }
 }

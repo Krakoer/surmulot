@@ -41,15 +41,16 @@ impl Repository{
             }
     }
 
-    pub async fn get_jobs(&self, db: &Pool<Postgres>, agent_id: Uuid) -> Result<Vec<Job>, Error>{
-        const QUERY: &str = "SELECT * FROM jobs WHERE agent_id = $1 ORDER BY created_at";
+    pub async fn get_job(&self, db: &Pool<Postgres>, agent_id: Uuid) -> Result<Job, Error>{
+        const QUERY: &str = "SELECT * FROM jobs WHERE agent_id = $1 AND output IS NULL LIMIT 1";
         match sqlx::query_as::<_, Job>(QUERY)
             .bind(agent_id)
-            .fetch_all(db)
+            .fetch_optional(db)
             .await{
-                Ok(res) => Ok(res),
+                Ok(Some(res)) => Ok(res),
+                Ok(None) => Err(Error::NotFound(format!("No jobs found for agent {}", agent_id))),
                 Err(err) => {
-                    error!("get_jobs: {}", err);
+                    error!("get_job: {}", err);
                     Err(err.into())
                 }
             }

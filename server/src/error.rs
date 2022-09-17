@@ -5,6 +5,8 @@ use sqlx;
 pub enum Error{
     #[error("Internal error")]
     Internal(String),
+    #[error("Not Found error")]
+    NotFound(String),
 }
 
 impl std::convert::From<std::num::ParseIntError> for Error{
