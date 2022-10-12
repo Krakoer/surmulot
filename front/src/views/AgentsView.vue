@@ -17,14 +17,13 @@ export default {
     },
     data(){
         return {
-            agents : [
-                {
-                    id: 1,
-                    created_at: "vouvou",
-                    last_seen: "bonjoue"
-                }
-            ]
+            agents : []
         }
+    },
+    async created(){
+        const resp = await fetch("api/agents")
+        const data = await resp.json()
+        this.agents = data
     }
 }
 </script>

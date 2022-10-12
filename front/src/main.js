@@ -12,9 +12,10 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 /* import specific icons */
 import { faPersonMilitaryRifle, faHouse } from '@fortawesome/free-solid-svg-icons'
+import { faScrewdriverWrench } from '@fortawesome/free-solid-svg-icons'
 
 /* add icons to the library */
-library.add(faPersonMilitaryRifle, faHouse)
+library.add(faPersonMilitaryRifle, faHouse, faScrewdriverWrench)
 
 /* import specific icons */
 createApp(App).use(router).component('font-awesome-icon', FontAwesomeIcon).mount('#app')

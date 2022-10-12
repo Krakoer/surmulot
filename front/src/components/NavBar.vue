@@ -14,6 +14,12 @@
                         Agents
                     </router-link>
                 </li>
+                <li class="nav-item">
+                    <router-link class="nav-link" to="/jobs">
+                        <font-awesome-icon class="feather" icon="fa-solid fa-screwdriver-wrench" />
+                        Jobs
+                    </router-link>
+                </li>
             </ul>
         </div>
     </nav>

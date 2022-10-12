@@ -1,12 +1,14 @@
 <template>
   <div>
-    <h1>COUCOU</h1>
+    <Title title="Bonjour"></Title>
   </div>
 </template>
 
 <script>
+import Title from '@/components/Title.vue';
 
 export default {
-  name: 'HomeView',
+    name: "HomeView",
+    components: { Title }
 }
 </script>
