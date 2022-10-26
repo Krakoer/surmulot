@@ -14,26 +14,13 @@
     </div>
 </template>
   
-<script>
+<script setup>
 import JobsTable from "@/components/JobsTable.vue"
 import NewJobModal from "@/components/NewJobModal.vue"
 import {useJobsStore} from "@/stores/jobs"
 
-export default {
-    name: 'JobsView',
-    components:{
-        JobsTable,
-        NewJobModal
-    },
-    data(){
-        return {
-            jobs : []
-        }
-    },
-    mounted(){
-        const jobStore = useJobsStore()
-        this.jobs = jobStore.getAll
-    }
-}
+const jobStore = useJobsStore();
+const jobs = jobStore.getAll;
+
 </script>
   

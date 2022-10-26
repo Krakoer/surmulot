@@ -16,7 +16,7 @@
               <label for="exampleFormControlSelect1">Agent ID</label>
 
               <select v-model="selected_id" class="form-control" id="exampleFormControlSelect1">
-                <option v-for="id in agent_ids" :key="id">{{ id }}</option>
+                <option v-for="id in agents_ids" :key="id">{{ id }}</option>
               </select>
             </div>
             <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Run Job</button>
@@ -30,28 +30,20 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import { useAgentsStore } from "@/stores/agents"
 import { useJobsStore } from "@/stores/jobs"
+import {ref} from 'vue'
 
-export default {
-  data() {
-    return {
-      command: '',
-      agent_ids: [],
-      selected_id: '',
-    }
-  },
-  methods: {
-    async triggerNewJob() {
-      const jobStore = useJobsStore()
-      await jobStore.createJob(this.command, this.selected_id)
-      await jobStore.fetchJobs()
-    }
-  },
-  mounted() {
-    const agentsStore = useAgentsStore();
-    this.agent_ids = agentsStore.getIds
-  },
+const jobStore = useJobsStore();
+const agentsStore = useAgentsStore();
+const command = ref('');
+const agents_ids = agentsStore.getIds;
+const selected_id = ref('');
+
+async function triggerNewJob() {
+  await jobStore.createJob(command.value, selected_id.value)
+  await jobStore.fetchJobs()
 }
+
 </script>
