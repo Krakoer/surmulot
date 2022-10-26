@@ -1,0 +1,28 @@
+import { defineStore } from 'pinia'
+
+
+export const useJobsStore = defineStore('jobs', {
+    state: () => ({ jobs: [] }),
+    getters: {
+        getAll: (state) => state.jobs,
+        getIds: (state) => {
+            return state.jobs.map((agent) => agent.id)
+        }
+    },
+    actions: {
+        async fetchJobs() {
+            const resp = await fetch("api/jobs")
+            const data = await resp.json()
+            this.jobs = data
+        },
+
+        async createJob(command, agentId) {
+            const resp = await fetch("api/jobs", {
+                method: "POST", headers: {
+                    'Content-Type': 'application/json',
+                }, body: JSON.stringify({ command: command, agent_id: agentId })
+            })
+            console.log(resp)
+        }
+    }
+})

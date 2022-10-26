@@ -8,6 +8,8 @@
 <script>
 import Title from "@/components/Title.vue"
 import AgentsTable from "@/components/AgentsTable.vue"
+import {useAgentsStore} from "@/stores/agents"
+
 
 export default {
     name: 'AgentsView',
@@ -20,10 +22,9 @@ export default {
             agents : []
         }
     },
-    async created(){
-        const resp = await fetch("api/agents")
-        const data = await resp.json()
-        this.agents = data
+    mounted(){
+        const agentStore = useAgentsStore()
+        this.agents = agentStore.getAll
     }
 }
 </script>

@@ -17,22 +17,22 @@
 <script>
 import JobsTable from "@/components/JobsTable.vue"
 import NewJobModal from "@/components/NewJobModal.vue"
+import {useJobsStore} from "@/stores/jobs"
 
 export default {
     name: 'JobsView',
     components:{
-    JobsTable,
-    NewJobModal
-},
+        JobsTable,
+        NewJobModal
+    },
     data(){
         return {
             jobs : []
         }
     },
-    async created(){
-        const resp = await fetch("api/jobs")
-        const data = await resp.json()
-        this.jobs = data
+    mounted(){
+        const jobStore = useJobsStore()
+        this.jobs = jobStore.getAll
     }
 }
 </script>
