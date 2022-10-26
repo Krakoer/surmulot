@@ -1,15 +1,16 @@
 use sqlx::FromRow;
 use uuid::Uuid;
 use chrono::{DateTime, Utc};
+use serde::{Serialize, Deserialize};
 
-#[derive(Debug, FromRow)]
+#[derive(Debug, FromRow, Serialize, Deserialize)]
 pub struct Agent{
     pub id: Uuid,
     pub created_at: DateTime<Utc>,
     pub last_seen_at: DateTime<Utc>,
 }
 
-#[derive(Debug, FromRow)]
+#[derive(Debug, FromRow, Serialize, Deserialize)]
 pub struct Job{
     pub id: Uuid,
     pub created_at: DateTime<Utc>,

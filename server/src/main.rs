@@ -10,7 +10,7 @@ mod repository;
 mod service;
 mod api;
 
-pub use error::Error;
+pub use error::MyError;
 pub use repository::Repository;
 pub use service::Service;
 
@@ -27,7 +27,7 @@ async fn main() -> Result<(), anyhow::Error> {
     let s = Service::new(pool);
     
     let app = routes(s);
-    axum::Server::bind(&"127.0.0.1:3000".parse().unwrap())
+    axum::Server::bind(&"127.0.0.1:5000".parse().unwrap())
         .serve(app.into_make_service())
         .await
         .unwrap();

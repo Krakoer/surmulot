@@ -1,10 +1,10 @@
 use chrono::Utc;
 use uuid::Uuid;
 
-use crate::{Service, Error, entities::Job};
+use crate::{Service, MyError, entities::Job};
 
 impl Service{
-    pub async fn create_job(&self, agent_id: &Uuid, command: String) -> Result<Job, Error>{
+    pub async fn create_job(&self, agent_id: &Uuid, command: String) -> Result<Job, MyError>{
         let command = command.trim();
         let mut args: Vec<String> = command.split_whitespace().map(|e| e.to_string()).collect();
         let command = args.remove(0);
@@ -23,11 +23,11 @@ impl Service{
         Ok(new_job)
     }
 
-    pub async fn list_all_jobs(&self) -> Result<Vec<Job>, Error>{
+    pub async fn list_all_jobs(&self) -> Result<Vec<Job>, MyError>{
         self.repo.get_all_jobs(&self.db).await
     }
 
-    pub async fn list_jobs(&self, agent_id: Uuid) -> Result<Job, Error>{
+    pub async fn list_jobs(&self, agent_id: Uuid) -> Result<Job, MyError>{
         self.repo.get_job(&self.db, agent_id).await
     }
 }

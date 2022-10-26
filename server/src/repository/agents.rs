@@ -1,10 +1,10 @@
 use super::Repository;
-use crate::{entities::Agent, Error};
+use crate::{entities::Agent, MyError};
 use log::error;
 use sqlx::{Pool, Postgres};
 
 impl Repository{
-    pub async fn create_agent(&self, db: &Pool<Postgres>, agent: &Agent) -> Result<(), Error>{
+    pub async fn create_agent(&self, db: &Pool<Postgres>, agent: &Agent) -> Result<(), MyError>{
         const QUERY: &str = "INSERT INTO agents
             (id, created_at, last_seen_at)
             VALUES ($1, $2, $3)";
@@ -23,7 +23,7 @@ impl Repository{
             }
     }
 
-    pub async fn get_agents(&self, db: &Pool<Postgres>) -> Result<Vec<Agent>, Error>{
+    pub async fn get_agents(&self, db: &Pool<Postgres>) -> Result<Vec<Agent>, MyError>{
         const QUERY: &str = "SELECT * FROM agents ORDER BY created_at";
         match sqlx::query_as::<_, Agent>(QUERY)
             .fetch_all(db)

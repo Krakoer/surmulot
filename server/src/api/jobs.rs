@@ -4,7 +4,7 @@ use serde::Deserialize;
 use uuid::Uuid;
 use axum::{Extension, extract::{Json, Path}};
 
-use crate::Service;
+use crate::{Service, MyError, entities::Job};
 
 #[derive(Deserialize, Debug)]
 pub struct CreateJob{
@@ -30,21 +30,21 @@ pub async fn post_jobs(service: Extension<Service>, Json(payload): Json<CreateJo
     job.id.to_string()
 }
 
-pub async fn get_all_jobs(service: Extension<Service>) -> String{
+pub async fn get_all_jobs(service: Extension<Service>) -> Result<Json<Vec<Job>>, MyError>{
     match service.list_all_jobs().await{
-        Ok(jobs) => format!("{:#?}", jobs),
-        Err(e) => format!("Error getting jobs: {}", e)
+        Ok(jobs) => Ok(Json(jobs)),
+        Err(e) => Err(e)
     }
 }
 
-pub async fn get_jobs(service: Extension<Service>, Path(agent_id): Path<String>) -> String{
+pub async fn get_jobs(service: Extension<Service>, Path(agent_id): Path<String>) -> Result<Json<Job>, MyError>{
     let agent_id = match Uuid::from_str(&agent_id){
         Ok(a) => a,
-        Err(e) => {return format!("Error getting jobs: {}", e)}
+        Err(e) => {return Err(e.into())}
     };
     
     match service.list_jobs(agent_id).await{
-        Ok(job) => format!("{:#?}", job),
-        Err(e) => format!("Error getting jobs: {}", e)
+        Ok(job) => Ok(Json(job)),
+        Err(e) => Err(e)
     }
 }

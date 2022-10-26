@@ -2,7 +2,7 @@ use log::error;
 use crate::error;
 use sqlx::{self, postgres::PgPoolOptions, Pool, Postgres};
 
-pub async fn connect(db_url: &str) -> Result<Pool<Postgres>, error::Error>{
+pub async fn connect(db_url: &str) -> Result<Pool<Postgres>, error::MyError>{
     PgPoolOptions::new()
         .max_connections(10)
         .connect(db_url)
@@ -13,7 +13,7 @@ pub async fn connect(db_url: &str) -> Result<Pool<Postgres>, error::Error>{
         })
 }
 
-pub async fn migrate(db: &Pool<Postgres>) -> Result<(), error::Error> {
+pub async fn migrate(db: &Pool<Postgres>) -> Result<(), error::MyError> {
     match sqlx::migrate!("./db/migrations").run(db).await {
         Ok(_) => Ok(()),
         Err(err) => {

@@ -1,10 +1,10 @@
 use chrono::Utc;
 use uuid::Uuid;
 
-use crate::{Service, entities::Agent, Error};
+use crate::{Service, entities::Agent, MyError};
 
 impl Service{
-    pub async fn register_agent(&self) -> Result<Uuid, Error>{
+    pub async fn register_agent(&self) -> Result<Uuid, MyError>{
         let now = Utc::now();
         let id = Uuid::new_v4();
         let agent = Agent{
@@ -18,7 +18,7 @@ impl Service{
         Ok(id)
     }
 
-    pub async fn get_agents(&self) -> Result<Vec<Agent>, Error>{
+    pub async fn get_agents(&self) -> Result<Vec<Agent>, MyError>{
         self.repo.get_agents(&self.db).await
     }
 }
