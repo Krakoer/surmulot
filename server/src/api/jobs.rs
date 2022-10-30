@@ -48,3 +48,12 @@ pub async fn get_jobs(service: Extension<Service>, Path(agent_id): Path<String>)
         Err(e) => Err(e)
     }
 }
+
+pub async fn post_result(service: Extension<Service>, Path(job_id): Path<String>, body: String) -> Result<(), MyError>{
+    let job_id = match Uuid::from_str(&job_id){
+        Ok(a) => a,
+        Err(e) => {return Err(e.into())}
+    };
+
+    service.post_result(job_id, body).await
+}

@@ -30,4 +30,8 @@ impl Service{
     pub async fn list_jobs(&self, agent_id: Uuid) -> Result<Job, MyError>{
         self.repo.get_job(&self.db, agent_id).await
     }
+
+    pub async fn post_result(&self, job_id: Uuid, output: String) -> Result<(), MyError>{
+        self.repo.post_result(&self.db, job_id, output).await
+    }
 }

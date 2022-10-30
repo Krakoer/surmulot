@@ -1,3 +1,4 @@
+use chrono::Utc;
 use sqlx::{Pool, Postgres};
 use log::error;
 use uuid::Uuid;
@@ -51,6 +52,22 @@ impl Repository{
                 Ok(None) => Err(MyError::NotFound(format!("No jobs found for agent {}", agent_id))),
                 Err(err) => {
                     error!("get_job: {}", err);
+                    Err(err.into())
+                }
+            }
+    }
+
+    pub async fn post_result(&self, db: &Pool<Postgres>, job_id: Uuid, output: String) -> Result<(), MyError>{
+        const QUERY: &str = "UPDATE jobs SET output = $1, executed_at = $2 WHERE id = $3";
+        match sqlx::query(QUERY)
+            .bind(output)
+            .bind(Utc::now())
+            .bind(job_id)
+            .execute(db)
+            .await{
+                Ok(_) => Ok(()),
+                Err(err) => {
+                    error!("post_results: {}", &err);
                     Err(err.into())
                 }
             }
