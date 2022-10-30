@@ -2,8 +2,22 @@ use std::thread;
 use std::{fs, str::FromStr, time::Duration};
 use ureq;
 use uuid::Uuid;
+use std::process;
+use chrono::{DateTime, Utc};
+use serde::{Serialize, Deserialize};
 
 const API: &str = "http://127.0.0.1:5000";
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct Job{
+  pub id: Uuid,
+  pub created_at: DateTime<Utc>,
+  pub executed_at: Option<DateTime<Utc>>,
+  pub command: String,
+  pub args: Vec<String>,
+  pub output: Option<String>,
+  pub agent_id: Uuid,
+}
 
 fn main() {
     let ureq_agent: ureq::Agent = ureq::AgentBuilder::new()
@@ -43,8 +57,15 @@ fn main() {
             .get(format!("{API}/jobs/{id}").as_str())
             .call(){
               Ok(resp) => {
-                let job = resp.into_string().expect("Cannot convert resp into string");
-                println!("Got job: {job}");
+                let job:Job = resp.into_json().expect("Cannot convert resp into json");
+                let output = execute_command(job.command, job.args);
+                let resp = ureq_agent.post(format!("{API}/jobs/result/{}", job.id).as_str()).send_string(&output);
+                if resp.is_ok(){
+                  println!("Result sent");
+                }
+                else {
+                    println!("Failed to sent result: {:?}", resp)
+                }
               },
               Err(ureq::Error::Status(code, resp))=>{
                 if code == 404{
@@ -59,4 +80,9 @@ fn main() {
 
         thread::sleep(Duration::from_secs(5));
     }
+}
+
+fn execute_command(command: String, args: Vec<String>) -> String{
+  let output = process::Command::new(command).args(&args).output().expect("Failed to run command");
+  String::from_utf8(output.stdout).expect("Failed to parse utf8 output")
 }
