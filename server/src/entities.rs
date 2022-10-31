@@ -8,6 +8,14 @@ pub struct Agent{
     pub id: Uuid,
     pub created_at: DateTime<Utc>,
     pub last_seen_at: DateTime<Utc>,
+    pub username: String,
+    pub hostname: String,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct AgentRegister{
+    pub username: String,
+    pub hostname: String,
 }
 
 #[derive(Debug, FromRow, Serialize, Deserialize)]

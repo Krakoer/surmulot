@@ -1,7 +1,9 @@
 CREATE TABLE agents (
     id UUID PRIMARY KEY,
     created_at TIMESTAMP WITH TIME ZONE NOT NULL,
-    last_seen_at TIMESTAMP WITH TIME ZONE NOT NULL
+    last_seen_at TIMESTAMP WITH TIME ZONE NOT NULL,
+    username TEXT NOT NULL,
+    hostname TEXT NOT NULL
 );
 CREATE TABLE jobs (
     id UUID PRIMARY KEY,

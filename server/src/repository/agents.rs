@@ -6,13 +6,15 @@ use sqlx::{Pool, Postgres};
 impl Repository{
     pub async fn create_agent(&self, db: &Pool<Postgres>, agent: &Agent) -> Result<(), MyError>{
         const QUERY: &str = "INSERT INTO agents
-            (id, created_at, last_seen_at)
-            VALUES ($1, $2, $3)";
+            (id, created_at, last_seen_at, username, hostname)
+            VALUES ($1, $2, $3, $4, $5)";
 
         match sqlx::query(QUERY)
             .bind(agent.id)
             .bind(agent.created_at)
             .bind(agent.last_seen_at)
+            .bind(&agent.username)
+            .bind(&agent.hostname)
             .execute(db)
             .await{
                 Ok(_) => Ok(()),

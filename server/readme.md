@@ -4,9 +4,16 @@ Needs postgres server (use docker ;))
 
 ## Endpoints
 
-- [x] /agents       GET     --> Vec<Agent>
-- [x] /agents       POST    --> id
-- [x] /jobs         POST    agent_id, command --> id
+- /agents               GET     --> Vec<Agent>
+- /agents               POST    --> uuid
+- /jobs                 POST    agent_id, command --> id
+- /jobs                 GET     --> Vec<Jobs>
+- /jobs/:agent_id       GET     --> Job
+- /jobs/result/:job_id  POST    String
+
+## ToDo
+
+[ ] Long polling
 
 ## Ressources
 
