@@ -22,5 +22,6 @@ import {useJobsStore} from "@/stores/jobs"
 const jobStore = useJobsStore();
 const jobs = jobStore.getAll;
 
+
 </script>
   

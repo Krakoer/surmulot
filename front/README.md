@@ -1,5 +1,10 @@
 # front
 
+## ToDo
+
+- [ ] Click on agent: display atb with more info and commands
+- [ ] Add command direcly on agent
+
 ## Project setup
 ```
 npm install

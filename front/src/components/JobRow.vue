@@ -2,7 +2,7 @@
     <tr>
         <td>{{job["id"]}}</td>
         <td>{{job["created_at"]}}</td>
-        <td>{{job["exected_at"]}}</td>
+        <td>{{job["executed_at"]}}</td>
         <td>{{job["command"]}}</td>
         <td>{{job["args"]}}</td>
         <td>{{job["output"]}}</td>
