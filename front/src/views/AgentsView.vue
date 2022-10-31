@@ -4,7 +4,9 @@
         <div class="pt-3 pb-2 mb-3 border-bottom">
         <AgentsTable :agents="agents" @changeAgentSelected="selectAgent"></AgentsTable>
         </div>
-        <AgentDetails v-if="selected_agent != null" :agent="selected_agent"></AgentDetails>
+        <div v-if="selected_agent != null">
+        <AgentDetails  :agent="selected_agent"></AgentDetails>
+    </div>
     </div>
 </template>
   

@@ -7,6 +7,9 @@ export const useJobsStore = defineStore('jobs', {
         getAll: (state) => state.jobs,
         getIds: (state) => {
             return state.jobs.map((agent) => agent.id)
+        },
+        getByAgent: (state) => {
+            return (agentId) => state.jobs.filter((job) => job.agent_id == agentId)
         }
     },
     actions: {
