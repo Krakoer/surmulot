@@ -1,5 +1,5 @@
 <template>
-    <h1>About {{agent.id}}</h1>
+    <h4>Jobs of {{agent.id}}</h4>
     <JobsTable :jobs="agentJobs"></JobsTable>
 </template>
 
