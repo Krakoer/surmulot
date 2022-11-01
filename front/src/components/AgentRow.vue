@@ -1,5 +1,5 @@
 <template>
-    <tr>
+    <tr :class="{selected: selected}">
         <td>{{agent["id"]}}</td>
         <td>{{formatDate(agent["created_at"])}}</td>
         <td>{{formatDate(agent["last_seen_at"])}}</td>
@@ -13,7 +13,8 @@ import formatDateMixin from '@/mixins/formatDateMixin';
 
 export default{
     props:{
-        agent: Object
+        agent: Object,
+        selected: Boolean
     },
     mixins: [formatDateMixin],
 }
@@ -21,6 +22,14 @@ export default{
 
 <style scoped>
 td{
-cursor: pointer;
+    cursor: pointer;
+}
+tr:hover
+{
+    background-color: #d4d4d4;
+}
+tr.selected
+{
+    background-color: #d4d4d4;
 }
 </style>

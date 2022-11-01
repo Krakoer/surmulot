@@ -11,7 +11,7 @@
         </tr>
       </thead>
       <tbody v-for="agent in agents" :key="agent.id">
-            <AgentRow :agent="agent" v-on:click="selectAgent(agent.id)"></AgentRow>
+            <AgentRow :selected="selected_agent == agent.id" :agent="agent" v-on:click="selectAgent(agent.id)"></AgentRow>
       </tbody>
     </table>
   </div>
@@ -32,6 +32,13 @@ export default{
     methods: {
       selectAgent(id) {
         this.$emit('changeAgentSelected', id)
+        if(id == this.selected_agent){
+          this.selected_agent = ""
+        }
+        else{
+          this.selected_agent = id
+        }
+        console.log(this.selected_agent)
       }
     },
     emits: ['changeAgentSelected'],

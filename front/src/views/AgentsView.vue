@@ -36,6 +36,10 @@ export default {
     },
     methods: {
         selectAgent(new_id){
+            if(this.selected_agent != null && new_id == this.selected_agent.id){
+                this.selected_agent = null
+                return
+            }
             this.selected_agent = this.agents.find((a) => a.id == new_id)
         }
     }
