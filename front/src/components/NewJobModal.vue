@@ -12,7 +12,7 @@
               <label for="jobCommand" class="form-label">Command</label>
               <input v-model="command" type="text" class="form-control" id="jobCommand">
             </div>
-            <div class="form-group mb-3">
+            <div v-if="agent_id.length == 0" class="form-group mb-3">
               <label for="exampleFormControlSelect1">Agent ID</label>
 
               <select v-model="selected_id" class="form-control" id="exampleFormControlSelect1">
@@ -35,6 +35,13 @@ import { useAgentsStore } from "@/stores/agents"
 import { useJobsStore } from "@/stores/jobs"
 import {ref} from 'vue'
 
+const props = defineProps({
+    agent_id: {
+      type: String,
+      default: ""
+    }
+})
+
 const jobStore = useJobsStore();
 const agentsStore = useAgentsStore();
 const command = ref('');
@@ -42,7 +49,14 @@ const agents_ids = agentsStore.getIds;
 const selected_id = ref('');
 
 async function triggerNewJob() {
-  await jobStore.createJob(command.value, selected_id.value)
+  var id = "";
+  if(props.agent_id.length > 0){
+    id = props.agent_id
+  }
+  else{
+    id = selected_id.value
+  }
+  await jobStore.createJob(command.value, id)
   await jobStore.fetchJobs()
 }
 

@@ -25,7 +25,6 @@ export const useJobsStore = defineStore('jobs', {
                     'Content-Type': 'application/json',
                 }, body: JSON.stringify({ command: command, agent_id: agentId })
             })
-            console.log(resp)
         }
     }
 })

@@ -38,7 +38,6 @@ export default{
         else{
           this.selected_agent = id
         }
-        console.log(this.selected_agent)
       }
     },
     emits: ['changeAgentSelected'],
