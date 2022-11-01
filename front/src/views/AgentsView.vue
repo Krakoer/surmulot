@@ -10,39 +10,25 @@
     </div>
 </template>
   
-<script>
+<script setup>
 import Title from "@/components/Title.vue"
 import AgentsTable from "@/components/AgentsTable.vue"
 import AgentDetails from "@/components/AgentDetails.vue"
 import {useAgentsStore} from "@/stores/agents"
+import {ref} from "vue"
 
 
-export default {
-    name: 'AgentsView',
-    components:{
-        Title,
-        AgentsTable,
-        AgentDetails,
-    },
-    data(){
-        return {
-            agents : [],
-            selected_agent: null
-        }
-    },
-    mounted(){
-        const agentStore = useAgentsStore()
-        this.agents = agentStore.getAll
-    },
-    methods: {
-        selectAgent(new_id){
-            if(this.selected_agent != null && new_id == this.selected_agent.id){
-                this.selected_agent = null
-                return
-            }
-            this.selected_agent = this.agents.find((a) => a.id == new_id)
-        }
+const agentStore = useAgentsStore()
+const agents = agentStore.getAll
+const selected_agent = ref(null)
+
+function selectAgent(new_id){
+    if(selected_agent.value != null && new_id == selected_agent.value.id){
+        selected_agent.value = null
+        return
     }
+    selected_agent.value = agents.find((a) => a.id == new_id)
 }
+
 </script>
   

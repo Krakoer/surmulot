@@ -16,16 +16,12 @@ import Header from "@/components/Header.vue"
 import NavBar from "@/components/NavBar.vue"
 import {useAgentsStore} from "@/stores/agents"
 import {useJobsStore} from "@/stores/jobs"
-import { onMounted } from "vue";
 
 const agentsStore = useAgentsStore();
 const jobsStore = useJobsStore();
 
-onMounted(async ()  => {
-    await agentsStore.fetchAgents();
-    await jobsStore.fetchJobs();
-  }
-)
+agentsStore.fetchAgents();
+jobsStore.fetchJobs();
 </script>
 
 <style>
