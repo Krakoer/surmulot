@@ -8,16 +8,15 @@
     </tr>
 </template>
 
-<script>
-import formatDateMixin from '@/mixins/formatDateMixin';
+<script setup>
+import {formatDate} from '@/composables/formatDate'
 
-export default{
-    props:{
-        agent: Object,
-        selected: Boolean
-    },
-    mixins: [formatDateMixin],
-}
+const props = defineProps({
+    agent: Object,
+    selected: Boolean
+})
+
+
 </script>
 
 <style scoped>

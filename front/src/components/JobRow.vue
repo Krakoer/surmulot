@@ -11,12 +11,10 @@
 </template>
 
 <script>
-import formatDateMixin from '@/mixins/formatDateMixin';
+import {formatDate} from '@/composables/formatDate.js'
 
 export default{
     props:{
         job: Object
-    },
-    mixins:[formatDateMixin]
-}
+    },}
 </script>
