@@ -10,11 +10,11 @@
     </tr>
 </template>
 
-<script>
+<script setup>
 import {formatDate} from '@/modules/Format'
 
-export default{
-    props:{
-        job: Object
-    },}
+const props = defineProps({
+    job: Object
+})
+
 </script>
