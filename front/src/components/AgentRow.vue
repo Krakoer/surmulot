@@ -9,7 +9,7 @@
 </template>
 
 <script setup>
-import {formatDate} from '@/composables/formatDate'
+import {formatDate} from '@/modules/Format'
 
 const props = defineProps({
     agent: Object,

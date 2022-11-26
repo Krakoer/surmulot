@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import {formatDate} from '@/composables/formatDate.js'
+import {formatDate} from '@/modules/Format'
 
 export default{
     props:{
